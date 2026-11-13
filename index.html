@@ -9,6 +9,8 @@
     <title>Кузница мастера — мастерская</title>
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="./styles.css">
+    <script src="./scripts/economy.js" defer></script>
+    <script src="./scripts/game.js" defer></script>
     <script src="./scripts/interface.js" defer></script>
   </head>
   <body>
@@ -58,14 +60,14 @@
 
     <div class="app-shell">
       <header class="app-header">
-        <a class="brand" href="./index.html" aria-label="Кузница мастера — главная">
+        <a class="brand" href="#workshop" aria-label="Кузница мастера — к мастерской">
           <span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="#icon-anvil" /></svg></span>
           <span class="brand-name">Кузница<span>МАСТЕРА</span></span>
         </a>
         <div class="header-actions">
-          <button class="quiet-button" type="button" data-open-dialog="achievements-dialog" aria-label="Достижения, открыто 0 из 6" aria-haspopup="dialog" aria-controls="achievements-dialog">
+          <button class="quiet-button" type="button" data-open-dialog="achievements-dialog" aria-label="Достижения — скоро" aria-haspopup="dialog" aria-controls="achievements-dialog">
             <svg class="icon" aria-hidden="true"><use href="#icon-trophy" /></svg>
-            <span class="header-action-label">Достижения</span><span class="small-counter" data-stat="achievement-count">0 / 6</span>
+            <span class="header-action-label">Достижения</span><span class="small-counter" data-stat="achievement-count">Скоро</span>
           </button>
           <span class="header-divider" aria-hidden="true"></span>
           <button class="quiet-button help-button" type="button" data-open-dialog="help-dialog" aria-label="Как играть" aria-haspopup="dialog" aria-controls="help-dialog">
@@ -83,8 +85,8 @@
       </div>
 
       <p class="preview-notice" id="preview-notice" role="note">
-        <span class="preview-label">Демо интерфейса</span>
-        <span>Ковка, покупки и сохранение пока недоступны.</span>
+        <span class="preview-label">Без сохранения</span>
+        <span>Перезагрузка страницы начнёт игру заново.</span>
       </p>
 
       <main class="workspace" id="workshop" tabindex="-1">
@@ -92,11 +94,11 @@
           <div class="stats-bar" role="group" aria-label="Показатели игры">
             <div class="stat stat-balance">
               <span class="stat-label">Ваши монеты</span>
-              <div class="stat-value"><svg class="icon coin-icon" aria-hidden="true"><use href="#icon-coin" /></svg><span data-stat="balance">0</span><span class="stat-unit">монет</span></div>
+              <div class="stat-value"><svg class="icon coin-icon" aria-hidden="true"><use href="#icon-coin" /></svg><span data-stat="balance">0</span><span class="stat-unit" data-stat-unit="balance">монет</span></div>
             </div>
             <div class="stat">
               <span class="stat-label"><svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg>За удар</span>
-              <div class="stat-value"><span data-stat="click-income">1</span><span class="stat-unit">монета</span></div>
+              <div class="stat-value"><span data-stat="click-income">1</span><span class="stat-unit" data-stat-unit="click-income">монета</span></div>
             </div>
             <div class="stat">
               <span class="stat-label"><svg class="icon" aria-hidden="true"><use href="#icon-flame" /></svg>Автодоход</span>
@@ -223,28 +225,29 @@
                 <g fill="#f5b964" opacity=".6"><circle cx="322" cy="181" r="2"/><circle cx="285" cy="145" r="1.5"/><circle cx="349" cy="219" r="1.5"/><circle cx="250" cy="110" r="2"/><circle cx="195" cy="162" r="1.5"/></g>
                 <path fill="url(#edge-shade)" d="M0 0h900v570H0z"/>
               </svg>
-              <div class="scene-floor-label"><span class="tiny-line" aria-hidden="true"></span>РУЧНАЯ РАБОТА · ПЕРВЫЙ КЛИНОК<span class="tiny-line" aria-hidden="true"></span></div>
+              <div class="scene-floor-label"><span class="tiny-line" aria-hidden="true"></span>РУЧНЫХ УДАРОВ: <span data-stat="strikes">0</span><span class="tiny-line" aria-hidden="true"></span></div>
+              <button class="scene-hit-target" id="scene-hit-target" type="button" disabled aria-label="Ковать катану: +1 монета за удар" aria-describedby="preview-notice"></button>
             </div>
 
             <div class="forge-controls">
-              <div class="tool-summary"><svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg><span>Простой молоток<span class="tool-level">Уровень <span data-level="hammer">0</span> / 5</span></span></div>
+              <div class="tool-summary"><svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg><span>Молоток<span class="tool-level">Уровень <span data-level="hammer">0</span> / 5</span></span></div>
               <button class="forge-button" id="forge-button" type="button" disabled aria-describedby="preview-notice">
                 <svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg><span>Ковать катану</span><span class="forge-reward">+1</span>
               </button>
               <p class="keyboard-hint">Клик, касание<br>или <kbd>Пробел</kbd></p>
             </div>
           </section>
+          <p class="game-status" id="game-status" role="status" aria-live="polite" aria-atomic="true">Первое улучшение — молоток за 30 монет.</p>
 
           <section class="material-panel" aria-labelledby="material-heading">
-            <div class="section-topline"><h2 id="material-heading">Путь клинка</h2><span class="subtle-label">Материал <span data-stat="material-tier">1</span> из 3</span></div>
+            <div class="section-topline"><h2 id="material-heading">Путь клинка</h2><span class="subtle-label">Материалы · скоро</span></div>
             <ol class="material-path">
               <li class="material-step is-current" aria-current="step"><span class="material-swatch iron" aria-hidden="true"></span><span>Железо<small>Открыто</small></span></li>
               <li class="material-step"><span class="material-swatch steel" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#icon-lock" /></svg></span><span>Сталь<small>500 монет всего</small></span></li>
               <li class="material-step"><span class="material-swatch patterned" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#icon-lock" /></svg></span><span>Узорчатая сталь<small>5 000 монет всего</small></span></li>
             </ol>
-            <div class="progress-caption"><label for="material-progress">До открытия стали</label><span><strong data-stat="lifetime-earned">0</strong> / 500</span></div>
-            <progress id="material-progress" value="0" max="500">0 из 500 монет</progress>
-            <p class="material-footnote">Материалы открываются за общий заработок. Покупки не уменьшают прогресс.</p>
+            <div class="progress-caption"><span>Всего заработано</span><span><strong data-stat="lifetime-earned">0</strong> <span data-stat-unit="lifetime-earned">монет</span></span></div>
+            <p class="material-footnote">Открытие материалов появится в следующей версии. Покупки не уменьшают общий заработок.</p>
           </section>
         </section>
 
@@ -254,23 +257,23 @@
           <div class="upgrade-list">
             <article class="upgrade-card" data-upgrade="hammer" aria-labelledby="hammer-heading">
               <div class="upgrade-main"><span class="upgrade-icon copper"><svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg></span><div class="upgrade-info"><div class="upgrade-title"><h3 id="hammer-heading">Молоток</h3><span class="level-label">Ур. <span data-level="hammer">0</span> / 5</span></div><p>Точнее удар. Больше мастерства.</p></div></div>
-              <div class="upgrade-details"><span class="upgrade-effect">+1 <span>за удар</span></span><span class="current-contribution">Сейчас +0</span></div>
-              <div class="upgrade-bottom"><span class="level-track" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить молоток за 30 монет" aria-describedby="preview-notice"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span>30</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
+              <div class="upgrade-details"><span class="upgrade-effect"><strong data-upgrade-bonus>+1</strong> <span data-upgrade-unit>за удар</span></span><span class="current-contribution">Сейчас +0 / удар</span></div>
+              <div class="upgrade-bottom"><span class="level-track" role="img" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить молоток за 30 монет"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span data-price>30</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
             </article>
             <article class="upgrade-card" data-upgrade="anvil" aria-labelledby="anvil-heading">
               <div class="upgrade-main"><span class="upgrade-icon sage"><svg class="icon" aria-hidden="true"><use href="#icon-anvil" /></svg></span><div class="upgrade-info"><div class="upgrade-title"><h3 id="anvil-heading">Наковальня</h3><span class="level-label">Ур. <span data-level="anvil">0</span> / 5</span></div><p>Прочная основа вашего ремесла.</p></div></div>
-              <div class="upgrade-details"><span class="upgrade-effect">+2 <span>за удар</span></span><span class="current-contribution">Сейчас +0</span></div>
-              <div class="upgrade-bottom"><span class="level-track" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить наковальню за 80 монет" aria-describedby="preview-notice"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span>80</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
+              <div class="upgrade-details"><span class="upgrade-effect"><strong data-upgrade-bonus>+2</strong> <span data-upgrade-unit>за удар</span></span><span class="current-contribution">Сейчас +0 / удар</span></div>
+              <div class="upgrade-bottom"><span class="level-track" role="img" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить наковальню за 80 монет"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span data-price>80</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
             </article>
             <article class="upgrade-card" data-upgrade="apprentice" aria-labelledby="apprentice-heading">
               <div class="upgrade-main"><span class="upgrade-icon sand"><svg class="icon" aria-hidden="true"><use href="#icon-apprentice" /></svg></span><div class="upgrade-info"><div class="upgrade-title"><h3 id="apprentice-heading">Подмастерье</h3><span class="level-label">Ур. <span data-level="apprentice">0</span> / 5</span></div><p>Вторая пара умелых рук.</p></div></div>
-              <div class="upgrade-details"><span class="upgrade-effect">+1 <span>в секунду</span></span><span class="current-contribution">Сейчас +0</span></div>
-              <div class="upgrade-bottom"><span class="level-track" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить подмастерье за 60 монет" aria-describedby="preview-notice"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span>60</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
+              <div class="upgrade-details"><span class="upgrade-effect"><strong data-upgrade-bonus>+1</strong> <span data-upgrade-unit>в секунду</span></span><span class="current-contribution">Сейчас +0 / сек</span></div>
+              <div class="upgrade-bottom"><span class="level-track" role="img" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить подмастерье за 60 монет"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span data-price>60</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
             </article>
             <article class="upgrade-card" data-upgrade="forge" aria-labelledby="forge-heading">
               <div class="upgrade-main"><span class="upgrade-icon ember"><svg class="icon" aria-hidden="true"><use href="#icon-flame" /></svg></span><div class="upgrade-info"><div class="upgrade-title"><h3 id="forge-heading">Горн</h3><span class="level-label">Ур. <span data-level="forge">0</span> / 5</span></div><p>Сердце, которое согревает металл.</p></div></div>
-              <div class="upgrade-details"><span class="upgrade-effect">+5 <span>в секунду</span></span><span class="current-contribution">Сейчас +0</span></div>
-              <div class="upgrade-bottom"><span class="level-track" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить горн за 200 монет" aria-describedby="preview-notice"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span>200</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
+              <div class="upgrade-details"><span class="upgrade-effect"><strong data-upgrade-bonus>+5</strong> <span data-upgrade-unit>в секунду</span></span><span class="current-contribution">Сейчас +0 / сек</span></div>
+              <div class="upgrade-bottom"><span class="level-track" role="img" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить горн за 200 монет"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span data-price>200</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
             </article>
           </div>
           <div class="master-tip"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg><p><strong>Совет мастера</strong>Начните с молотка: каждый удар будет приносить больше монет.</p></div>
@@ -286,14 +289,14 @@
       <ol class="how-to-list">
         <li><span class="step-number">01</span><div><h3>Куйте катану</h3><p>Каждый удар приносит монеты. Нажимайте кнопку ковки мышью, касанием или клавишами Enter и пробел, когда она в фокусе.</p></div></li>
         <li><span class="step-number">02</span><div><h3>Улучшайте инструменты</h3><p>Молоток и наковальня увеличивают доход за удар. Подмастерье и горн приносят монеты автоматически, пока игра открыта.</p></div></li>
-        <li><span class="step-number">03</span><div><h3>Открывайте материалы</h3><p>Заработайте 500 монет суммарно, чтобы открыть сталь, и 5 000 — для узорчатой стали. Потраченные монеты тоже учитываются.</p></div></li>
+        <li><span class="step-number">03</span><div><h3>Растите в мастерстве</h3><p>У каждого улучшения пять уровней. Накапливайте монеты и выбирайте между силой удара и автоматическим доходом. Общий заработок учитывает и потраченные монеты.</p></div></li>
       </ol>
-      <p class="dialog-demo-note">Сейчас доступна демонстрация интерфейса. Игровая механика и сохранение ещё не подключены.</p>
+      <p class="dialog-demo-note">Прогресс действует до перезагрузки страницы. Сохранение, новые материалы, внешний вид улучшенных инструментов и достижения появятся в следующей версии.</p>
     </dialog>
 
     <dialog class="dialog achievements-dialog" id="achievements-dialog" aria-labelledby="achievements-title">
-      <div class="dialog-heading"><div><p class="eyebrow">СЛЕДЫ МАСТЕРСТВА</p><h2 id="achievements-title">Достижения <span class="dialog-count">0 / 6</span></h2></div><form method="dialog"><button class="icon-button" aria-label="Закрыть достижения" autofocus><svg class="icon" aria-hidden="true"><use href="#icon-close" /></svg></button></form></div>
-      <p class="dialog-intro">Каждый маленький шаг становится частью вашей истории.</p>
+      <div class="dialog-heading"><div><p class="eyebrow">СЛЕДЫ МАСТЕРСТВА</p><h2 id="achievements-title">Достижения <span class="dialog-count">Скоро</span></h2></div><form method="dialog"><button class="icon-button" aria-label="Закрыть достижения" autofocus><svg class="icon" aria-hidden="true"><use href="#icon-close" /></svg></button></form></div>
+      <p class="dialog-intro">Предпросмотр наград. Открытие достижений появится в следующей версии.</p>
       <ul class="achievement-list">
         <li><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg></span><div><h3>Первый удар</h3><p>Нанесите первый удар по катане.</p></div><span class="achievement-state">Закрыто</span></li>
         <li><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg></span><div><h3>Ровный ритм</h3><p>Нанесите 100 ударов суммарно.</p></div><span class="achievement-state">Закрыто</span></li>
@@ -303,6 +306,6 @@
         <li><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-blade" /></svg></span><div><h3>Узор мастера</h3><p>Откройте узорчатую сталь.</p></div><span class="achievement-state">Закрыто</span></li>
       </ul>
     </dialog>
-    <noscript><p class="noscript-notice">Для открытия правил и списка достижений включите JavaScript в браузере.</p></noscript>
+    <noscript><p class="noscript-notice">Чтобы ковать катану, покупать улучшения и открывать окна интерфейса, включите JavaScript в браузере.</p></noscript>
   </body>
 </html>

@@ -1,4 +1,4 @@
-// Stage 2: interface interactions only. Game state is introduced in the next stage.
+// Dialog controls; game state and input live in game.js.
 (() => {
   "use strict";
 
