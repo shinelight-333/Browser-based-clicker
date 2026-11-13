@@ -10,6 +10,7 @@
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="./styles.css">
     <script src="./scripts/economy.js" defer></script>
+    <script src="./scripts/storage.js" defer></script>
     <script src="./scripts/game.js" defer></script>
     <script src="./scripts/interface.js" defer></script>
   </head>
@@ -65,9 +66,9 @@
           <span class="brand-name">Кузница<span>МАСТЕРА</span></span>
         </a>
         <div class="header-actions">
-          <button class="quiet-button" type="button" data-open-dialog="achievements-dialog" aria-label="Достижения — скоро" aria-haspopup="dialog" aria-controls="achievements-dialog">
+          <button class="quiet-button" type="button" data-open-dialog="achievements-dialog" aria-label="Достижения, открыто 0 из 6" aria-haspopup="dialog" aria-controls="achievements-dialog">
             <svg class="icon" aria-hidden="true"><use href="#icon-trophy" /></svg>
-            <span class="header-action-label">Достижения</span><span class="small-counter" data-stat="achievement-count">Скоро</span>
+            <span class="header-action-label">Достижения</span><span class="small-counter" data-stat="achievement-count">0 / 6</span>
           </button>
           <span class="header-divider" aria-hidden="true"></span>
           <button class="quiet-button help-button" type="button" data-open-dialog="help-dialog" aria-label="Как играть" aria-haspopup="dialog" aria-controls="help-dialog">
@@ -84,10 +85,12 @@
         <p class="heading-note">Ваша мастерская.<br>История одного клинка.</p>
       </div>
 
-      <p class="preview-notice" id="preview-notice" role="note">
-        <span class="preview-label">Без сохранения</span>
-        <span>Перезагрузка страницы начнёт игру заново.</span>
-      </p>
+      <div class="save-notice" id="save-notice" role="status" aria-live="polite">
+        <span class="save-label" id="save-label">Загрузка</span>
+        <span id="save-detail">Восстанавливаем вашу мастерскую.</span>
+        <button class="text-button" id="reload-save" type="button" hidden>Повторить загрузку</button>
+        <button class="text-button" id="recovery-reset" type="button" data-open-dialog="reset-dialog" aria-haspopup="dialog" aria-controls="reset-dialog" hidden>Сбросить сохранение</button>
+      </div>
 
       <main class="workspace" id="workshop" tabindex="-1">
         <section class="forge-column" aria-label="Кузница и прогресс">
@@ -126,6 +129,9 @@
                   <linearGradient id="metal-top" x2=".7" y2="1"><stop stop-color="#8a8980"/><stop offset=".45" stop-color="#b1a596"/><stop offset="1" stop-color="#575c55"/></linearGradient>
                   <linearGradient id="metal-front" x2=".2" y2="1"><stop stop-color="#5b615b"/><stop offset=".45" stop-color="#3b4440"/><stop offset="1" stop-color="#292f2d"/></linearGradient>
                   <linearGradient id="hot-blade"><stop stop-color="#665c49"/><stop offset=".28" stop-color="#a7673c"/><stop offset=".55" stop-color="#ffb35b"/><stop offset=".8" stop-color="#ffdc92"/><stop offset="1" stop-color="#ed813d"/></linearGradient>
+                  <linearGradient id="steel-blade"><stop stop-color="#91a8af"/><stop offset=".5" stop-color="#d5e5e5"/><stop offset=".72" stop-color="#efbd80"/><stop offset="1" stop-color="#ffb45e"/></linearGradient>
+                  <linearGradient id="patterned-blade"><stop stop-color="#5c7a81"/><stop offset=".5" stop-color="#aec5c5"/><stop offset=".78" stop-color="#deba83"/><stop offset="1" stop-color="#ffbd69"/></linearGradient>
+                  <pattern id="blade-waves" width="30" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-5)"><path d="M-5 2q7-5 15 0t15 0t15 0M-5 7q7-5 15 0t15 0t15 0" fill="none" stroke="#e4f3e8" stroke-width="1.3" opacity=".75"/></pattern>
                   <linearGradient id="hammer-metal" x2=".8" y2="1"><stop stop-color="#a1a094"/><stop offset=".5" stop-color="#6d756f"/><stop offset="1" stop-color="#373f3a"/></linearGradient>
                   <linearGradient id="edge-shade"><stop stop-color="#161a17" stop-opacity=".65"/><stop offset=".2" stop-color="#161a17" stop-opacity="0"/><stop offset=".8" stop-color="#161a17" stop-opacity="0"/><stop offset="1" stop-color="#161a17" stop-opacity=".65"/></linearGradient>
                   <pattern id="brickwork" width="160" height="84" patternUnits="userSpaceOnUse"><path d="M0 0h160M0 42h160M80 0v42M0 42v42M160 42v42" fill="none" stroke="#8b8068" stroke-opacity=".09" stroke-width="2"/></pattern>
@@ -181,7 +187,7 @@
                   <path d="m10 22 8 9m24 15 8 9m-24-44 8 9" stroke="#604730"/>
                 </g>
 
-                <!-- Separate equipment groups are ready for later visual progression. -->
+                <!-- Equipment changes within the same workshop. -->
                 <ellipse cx="462" cy="493" rx="204" ry="36" fill="#080e0c" opacity=".48"/>
                 <g id="anvil" data-equipment="anvil" data-visual-level="0">
                   <path d="M355 371q89-24 178 0l13 114q-101 40-204 0z" fill="url(#wood)"/>
@@ -200,11 +206,22 @@
                   <path d="m356 249 205 0 26 18-246 8z" fill="#96998d"/>
                   <path d="m375 254 18-1 9 8-19 2z" fill="#313c34"/>
                   <path d="m381 346 15 17-13 16h94l-9-16 19-22" stroke="#778073" stroke-opacity=".35" fill="none" stroke-width="2"/>
+                  <g class="equipment-reinforcement">
+                    <path d="m316 309 242-6-11 16-220 6z" fill="#8eaaa5" stroke="#bdc6ad" stroke-width="2"/>
+                    <path d="m393 337 91-3-22 30 10 16h-80l12-17z" fill="#405650" stroke="#a0aaa0" stroke-width="3"/>
+                    <g fill="#d4d7bc"><circle cx="340" cy="315" r="3"/><circle cx="533" cy="310" r="3"/><circle cx="403" cy="345" r="3"/><circle cx="470" cy="342" r="3"/></g>
+                  </g>
+                  <g class="equipment-masterwork">
+                    <path d="m309 299 276-8-8 9-265 8zM350 415q94 26 190 0l2 12q-99 25-194 0zM344 469q100 28 201 0l2 11q-102 30-205 0z" fill="#b98249" stroke="#e8bd7c" stroke-width="2"/>
+                    <path d="m414 345 23-7 22 7-3 23-19 9-20-9z" fill="#aa7545" stroke="#edc58d" stroke-width="2"/>
+                    <path d="m437 344 9 12-9 12-9-12zM402 352l-6 10 8 7m66-20 6 10-8 7" fill="none" stroke="#ffe0a3" stroke-width="2"/>
+                  </g>
                 </g>
 
                 <g id="katana" data-material="iron">
                   <path d="m326 272 282-25 20 3-26 15-269 22z" fill="#ff9948" opacity=".5" filter="url(#blade-glow)"/>
-                  <path d="m292 274 40-3 258-24 38 3-26 16-269 20-38 1z" fill="url(#hot-blade)" stroke="#382d23" stroke-width="2"/>
+                  <path class="katana-body" d="m292 274 40-3 258-24 38 3-26 16-269 20-38 1z" fill="url(#hot-blade)" stroke="#382d23" stroke-width="2"/>
+                  <path class="katana-pattern" d="m334 272 256-24 33 3-23 12-266 21z" fill="url(#blade-waves)"/>
                   <path d="m334 280 267-20 27-10" fill="none" stroke="#ffe4a0" stroke-width="3"/>
                   <path d="m338 274 251-22" fill="none" stroke="#f6bf72" stroke-opacity=".5" stroke-width="2"/>
                   <path d="m293 274 39-3 2 15-39 1z" fill="#504e42"/>
@@ -220,18 +237,28 @@
                   <path d="m441 104 8 11v38l-13-13z" fill="#535d52"/>
                   <path d="m509 116 1 34 16-1 3-33z" fill="#a3a08b"/>
                   <path d="m454 119 41-1" stroke="#b7b69f" stroke-width="2" opacity=".5"/>
+                  <g class="equipment-reinforcement">
+                    <path d="m448 114 8 0v37l-8 1zM497 115h10v35l-10 1zM477 158h21v10h-21zM476 226h24v10h-24z" fill="#b7c7b8" stroke="#566b61" stroke-width="2"/>
+                    <path d="M480 175h16v44h-16z" fill="#39483c"/>
+                    <path d="m480 178 16 8m-16 2 16 8m-16 2 16 8m-16 2 16 8" stroke="#889d83" stroke-width="3"/>
+                  </g>
+                  <g class="equipment-masterwork">
+                    <path d="m446 114 11 0v37l-11 1zM498 115h11v35l-11 1zM476 155h23v14h-23zM475 226h26v12h-26z" fill="#bc864b" stroke="#efc88e" stroke-width="2"/>
+                    <path d="m477 118 13 13-13 14-13-14z" fill="#b77e43" stroke="#eaca96" stroke-width="2"/>
+                    <path d="m477 123 6 8-6 8-6-8z" fill="#f9dda0"/>
+                  </g>
                 </g>
 
                 <g fill="#f5b964" opacity=".6"><circle cx="322" cy="181" r="2"/><circle cx="285" cy="145" r="1.5"/><circle cx="349" cy="219" r="1.5"/><circle cx="250" cy="110" r="2"/><circle cx="195" cy="162" r="1.5"/></g>
                 <path fill="url(#edge-shade)" d="M0 0h900v570H0z"/>
               </svg>
               <div class="scene-floor-label"><span class="tiny-line" aria-hidden="true"></span>РУЧНЫХ УДАРОВ: <span data-stat="strikes">0</span><span class="tiny-line" aria-hidden="true"></span></div>
-              <button class="scene-hit-target" id="scene-hit-target" type="button" disabled aria-label="Ковать катану: +1 монета за удар" aria-describedby="preview-notice"></button>
+              <button class="scene-hit-target" id="scene-hit-target" type="button" disabled aria-label="Ковать катану: +1 монета за удар"></button>
             </div>
 
             <div class="forge-controls">
-              <div class="tool-summary"><svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg><span>Молоток<span class="tool-level">Уровень <span data-level="hammer">0</span> / 5</span></span></div>
-              <button class="forge-button" id="forge-button" type="button" disabled aria-describedby="preview-notice">
+              <div class="tool-summary"><svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg><span><span data-equipment-name="hammer">Простой молоток</span><span class="tool-level">Уровень <span data-level="hammer">0</span> / 5</span><span class="tool-level" data-equipment-name="anvil">Простая наковальня</span></span></div>
+              <button class="forge-button" id="forge-button" type="button" disabled>
                 <svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg><span>Ковать катану</span><span class="forge-reward">+1</span>
               </button>
               <p class="keyboard-hint">Клик, касание<br>или <kbd>Пробел</kbd></p>
@@ -240,14 +267,16 @@
           <p class="game-status" id="game-status" role="status" aria-live="polite" aria-atomic="true">Первое улучшение — молоток за 30 монет.</p>
 
           <section class="material-panel" aria-labelledby="material-heading">
-            <div class="section-topline"><h2 id="material-heading">Путь клинка</h2><span class="subtle-label">Материалы · скоро</span></div>
+            <div class="section-topline"><h2 id="material-heading">Путь клинка</h2><span class="subtle-label">Материал <span data-stat="material-tier">1</span> / 3</span></div>
             <ol class="material-path">
-              <li class="material-step is-current" aria-current="step"><span class="material-swatch iron" aria-hidden="true"></span><span>Железо<small>Открыто</small></span></li>
-              <li class="material-step"><span class="material-swatch steel" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#icon-lock" /></svg></span><span>Сталь<small>500 монет всего</small></span></li>
-              <li class="material-step"><span class="material-swatch patterned" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#icon-lock" /></svg></span><span>Узорчатая сталь<small>5 000 монет всего</small></span></li>
+              <li class="material-step is-current is-unlocked" data-material-step="iron" aria-current="step"><span class="material-swatch iron" aria-hidden="true"></span><span>Железо<small>В работе</small></span></li>
+              <li class="material-step" data-material-step="steel"><span class="material-swatch steel" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#icon-lock" /></svg></span><span>Сталь<small>500 монет всего</small></span></li>
+              <li class="material-step" data-material-step="patterned"><span class="material-swatch patterned" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#icon-lock" /></svg></span><span>Узорчатая сталь<small>5 000 монет всего</small></span></li>
             </ol>
             <div class="progress-caption"><span>Всего заработано</span><span><strong data-stat="lifetime-earned">0</strong> <span data-stat-unit="lifetime-earned">монет</span></span></div>
-            <p class="material-footnote">Открытие материалов появится в следующей версии. Покупки не уменьшают общий заработок.</p>
+            <div class="progress-caption"><label id="material-progress-label" for="material-progress">До материала «Сталь»</label><span id="material-target">500 монет всего</span></div>
+            <progress id="material-progress" value="0" max="1" aria-labelledby="material-progress-label"></progress>
+            <p class="material-footnote">Материал меняется автоматически. Покупки не уменьшают общий заработок.</p>
           </section>
         </section>
 
@@ -280,7 +309,7 @@
         </aside>
       </main>
 
-      <footer class="app-footer"><span>Кузница мастера<span class="footer-dot" aria-hidden="true">·</span>Браузерный кликер</span><span>Большое мастерство начинается с малого.</span></footer>
+      <footer class="app-footer"><span>Кузница мастера<span class="footer-dot" aria-hidden="true">·</span>Браузерный кликер</span><button class="text-button" type="button" data-open-dialog="reset-dialog" aria-haspopup="dialog" aria-controls="reset-dialog">Начать заново</button></footer>
     </div>
 
     <dialog class="dialog" id="help-dialog" aria-labelledby="help-title">
@@ -291,21 +320,28 @@
         <li><span class="step-number">02</span><div><h3>Улучшайте инструменты</h3><p>Молоток и наковальня увеличивают доход за удар. Подмастерье и горн приносят монеты автоматически, пока игра открыта.</p></div></li>
         <li><span class="step-number">03</span><div><h3>Растите в мастерстве</h3><p>У каждого улучшения пять уровней. Накапливайте монеты и выбирайте между силой удара и автоматическим доходом. Общий заработок учитывает и потраченные монеты.</p></div></li>
       </ol>
-      <p class="dialog-demo-note">Прогресс действует до перезагрузки страницы. Сохранение, новые материалы, внешний вид улучшенных инструментов и достижения появятся в следующей версии.</p>
+      <p class="dialog-demo-note">Инструменты меняют вид на уровнях 2 и 4. Сталь открывается за 500 монет общего заработка, узорчатая сталь — за 5 000. Материалы и достижения не дают дополнительных монет.<br><br>Прогресс автоматически сохраняется в этом браузере каждые 5 секунд и при важных событиях. После закрытия игры автодоход не начисляется.</p>
     </dialog>
 
     <dialog class="dialog achievements-dialog" id="achievements-dialog" aria-labelledby="achievements-title">
-      <div class="dialog-heading"><div><p class="eyebrow">СЛЕДЫ МАСТЕРСТВА</p><h2 id="achievements-title">Достижения <span class="dialog-count">Скоро</span></h2></div><form method="dialog"><button class="icon-button" aria-label="Закрыть достижения" autofocus><svg class="icon" aria-hidden="true"><use href="#icon-close" /></svg></button></form></div>
-      <p class="dialog-intro">Предпросмотр наград. Открытие достижений появится в следующей версии.</p>
+      <div class="dialog-heading"><div><p class="eyebrow">СЛЕДЫ МАСТЕРСТВА</p><h2 id="achievements-title">Достижения <span class="dialog-count" data-stat="achievement-count">0 / 6</span></h2></div><form method="dialog"><button class="icon-button" aria-label="Закрыть достижения" autofocus><svg class="icon" aria-hidden="true"><use href="#icon-close" /></svg></button></form></div>
+      <p class="dialog-intro">Шесть вех вашего ремесла. Открываются навсегда до начала новой игры.</p>
       <ul class="achievement-list">
-        <li><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg></span><div><h3>Первый удар</h3><p>Нанесите первый удар по катане.</p></div><span class="achievement-state">Закрыто</span></li>
-        <li><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg></span><div><h3>Ровный ритм</h3><p>Нанесите 100 ударов суммарно.</p></div><span class="achievement-state">Закрыто</span></li>
-        <li><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-anvil" /></svg></span><div><h3>Оснащённая кузница</h3><p>Улучшите молоток и наковальню до уровня 3.</p></div><span class="achievement-state">Закрыто</span></li>
-        <li><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-flame" /></svg></span><div><h3>Работа спорится</h3><p>Достигните автодохода 10 монет в секунду.</p></div><span class="achievement-state">Закрыто</span></li>
-        <li><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg></span><div><h3>Первая тысяча</h3><p>Заработайте 1 000 монет суммарно.</p></div><span class="achievement-state">Закрыто</span></li>
-        <li><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-blade" /></svg></span><div><h3>Узор мастера</h3><p>Откройте узорчатую сталь.</p></div><span class="achievement-state">Закрыто</span></li>
+        <li data-achievement="first-strike"><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg></span><div><h3>Первый удар</h3><p>Нанесите первый удар по катане.</p></div><span class="achievement-state">Закрыто</span></li>
+        <li data-achievement="steady-rhythm"><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-spark" /></svg></span><div><h3>Ровный ритм</h3><p>Нанесите 100 ударов суммарно.</p></div><span class="achievement-state">Закрыто</span></li>
+        <li data-achievement="equipped-forge"><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-anvil" /></svg></span><div><h3>Оснащённая кузница</h3><p>Улучшите молоток и наковальню до уровня 3.</p></div><span class="achievement-state">Закрыто</span></li>
+        <li data-achievement="working-forge"><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-flame" /></svg></span><div><h3>Работа спорится</h3><p>Достигните автодохода 10 монет в секунду.</p></div><span class="achievement-state">Закрыто</span></li>
+        <li data-achievement="first-thousand"><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg></span><div><h3>Первая тысяча</h3><p>Заработайте 1 000 монет суммарно.</p></div><span class="achievement-state">Закрыто</span></li>
+        <li data-achievement="master-pattern"><span class="achievement-icon"><svg class="icon" aria-hidden="true"><use href="#icon-blade" /></svg></span><div><h3>Узор мастера</h3><p>Откройте узорчатую сталь.</p></div><span class="achievement-state">Закрыто</span></li>
       </ul>
     </dialog>
+    <dialog class="dialog" id="reset-dialog" aria-labelledby="reset-title" aria-describedby="reset-description">
+      <div class="dialog-heading"><div><p class="eyebrow">НОВАЯ ИСТОРИЯ</p><h2 id="reset-title">Начать заново?</h2></div></div>
+      <p class="dialog-intro" id="reset-description">Монеты, улучшения, материалы и достижения этой игры будут сброшены. Восстановить текущий прогресс после сброса нельзя.</p>
+      <p class="reset-error" id="reset-error" role="alert" hidden></p>
+      <form class="dialog-actions" method="dialog"><button class="secondary-button" autofocus>Продолжить игру</button><button class="danger-button" id="confirm-reset" type="button">Сбросить прогресс</button></form>
+    </dialog>
+    <div class="milestone-toast" id="milestone-toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
     <noscript><p class="noscript-notice">Чтобы ковать катану, покупать улучшения и открывать окна интерфейса, включите JavaScript в браузере.</p></noscript>
   </body>
 </html>
