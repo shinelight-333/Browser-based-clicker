@@ -1,0 +1,15 @@
+Generated with the built-in ImageGen tool.
+Reference: actual gameplay screenshot of the redesigned forge.
+
+Use case: ads-marketing.
+Asset type: portfolio cover for a browser clicker game, landscape 4:3.
+Primary request: make a polished Russian game cover for the actual game in the reference screenshot.
+Input image: the screenshot is a reference for the game's actual painterly workshop, black-and-gold anvil, hammer and katana blank. It is not a layout to reproduce.
+Composition: striking cinematic close-up of the unfinished slender gently curved katana blank on the engraved master anvil, centre-right and lower half, a smith hammer striking it with a restrained fan of orange sparks. Blade has a bare narrow metal tang, NO guard or finished handle, only one sharp edge. Background is the game's richly textured medieval timber-and-stone workshop with amber windows and copper stone hearth. Small apprentice with red shirt and leather apron in the left background, secondary to blade.
+Design: professional restrained title design, dark charcoal-brown area in upper left for very legible large warm ivory-gold serif typography, subtle brass accents. Warm cinematic lighting, tangible wood stone steel, painterly realistic game art matching source. Cover, not a fake gameplay screenshot.
+Text verbatim, Cyrillic:
+large title on TWO lines: "КУЗНИЦА" / "МАСТЕРА"
+smaller subtitle below: "БРАУЗЕРНЫЙ КЛИКЕР"
+small bottom line: "20 улучшений · 5 видов стали"
+Keep all words at least 7 percent inside image edges. Title should occupy about upper-left 40 percent. Keep anvil, heated katana and striking hammer clearly visible.
+Avoid: UI panels, fake buttons, browser chrome, watermarks, logos, extra swords, double-edged straight blade, futuristic or cartoon style, green cast, excessive particles, illegible text.
