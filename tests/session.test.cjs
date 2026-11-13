@@ -64,8 +64,8 @@ test("a full game survives reloading after each of the twenty purchases", () => 
   assert.deepEqual(complete.levels, { hammer: 5, anvil: 5, apprentice: 5, forge: 5 });
   assert.equal(complete.clickIncome, 16);
   assert.equal(complete.passiveIncome, 30);
-  assert.equal(complete.materialIndex, 2);
-  assert.deepEqual(complete.equipmentTiers, { hammer: 2, anvil: 2 });
+  assert.equal(complete.materialIndex, 4);
+  assert.deepEqual(complete.equipmentTiers, { hammer: 5, anvil: 5, apprentice: 5, forge: 5 });
   assert.equal(complete.achievements.length, 6);
 
   for (const id of ["hammer", "anvil", "apprentice", "forge"]) {

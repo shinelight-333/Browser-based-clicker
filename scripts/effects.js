@@ -37,12 +37,14 @@
 
   function strike(amount) {
     if (motion.matches || document.hidden) return;
+    const impact = Number(hammer.dataset.impactAngle ?? -88);
+    const rest = impact + 18;
     // Restart the swing; rapid input never waits for an earlier animation to finish.
     play(hammer, [
-      { transform: "rotate(8deg)" },
-      { transform: "rotate(-1deg)", offset: 0.18 },
-      { transform: "rotate(17deg)", offset: 0.65 },
-      { transform: "rotate(8deg)" },
+      { transform: `rotate(${rest}deg)` },
+      { transform: `rotate(${impact}deg)`, offset: 0.18 },
+      { transform: `rotate(${rest + 15}deg)`, offset: 0.65 },
+      { transform: `rotate(${rest}deg)` },
     ], { duration: 260 });
     play(glow, [{ opacity: 0 }, { opacity: 0.5, offset: 0.2 }, { opacity: 0 }], { duration: 240, delay: 35 });
     sparks.forEach((spark, index) => {

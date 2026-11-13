@@ -6,24 +6,21 @@ function strikeTimes(game, count) {
   for (let i = 0; i < count; i += 1) game.strike();
 }
 
-test("materials unlock at exact lifetime thresholds, including fractional passive income", () => {
+test("all five steels unlock at exact lifetime thresholds, including fractions", () => {
   let time = 0;
   const game = createEconomy({ now: () => time });
   strikeTimes(game, 60);
   game.purchase("apprentice");
-  time = 439_999;
-  assert.equal(game.tick().materialIndex, 0);
-  time += 1;
-  assert.equal(game.tick().lifetimeEarnedMilli, 500 * COIN);
-  assert.equal(game.snapshot().materialIndex, 1);
+  for (const [index, threshold] of [500, 1500, 5000, 10000].entries()) {
+    time = (threshold - 60) * 1000 - 1;
+    assert.equal(game.tick().materialIndex, index);
+    time += 1;
+    assert.equal(game.tick().lifetimeEarnedMilli, threshold * COIN);
+    assert.equal(game.snapshot().materialIndex, index + 1);
+  }
   assert.equal(game.purchase("forge").ok, true);
-  assert.equal(game.snapshot().materialIndex, 1);
-  assert.ok(game.snapshot().balanceMilli < 500 * COIN);
-  time += 749_999;
-  assert.equal(game.tick().materialIndex, 1);
-  time += 1;
-  assert.equal(game.tick().lifetimeEarnedMilli, 5000 * COIN);
-  assert.equal(game.snapshot().materialIndex, 2);
+  assert.equal(game.snapshot().materialIndex, 4);
+  assert.ok(game.snapshot().balanceMilli < 10000 * COIN);
 });
 
 test("one delayed tick can unlock the highest material and several achievements", () => {
@@ -31,20 +28,20 @@ test("one delayed tick can unlock the highest material and several achievements"
   const game = createEconomy({ now: () => time });
   strikeTimes(game, 60);
   game.purchase("apprentice");
-  time = 5_000_000;
+  time = 10_000_000;
   const state = game.tick();
-  assert.equal(state.materialIndex, 2);
+  assert.equal(state.materialIndex, 4);
   assert.deepEqual(state.achievements, ["first-strike", "first-thousand", "master-pattern"]);
   assert.deepEqual(game.tick(), state);
-  assert.equal(state.balanceMilli, 5000 * COIN); // Achievements grant no money.
+  assert.equal(state.balanceMilli, 10000 * COIN); // Achievements grant no money.
 });
 
-test("hammer and anvil change appearance only at levels two and four", () => {
+test("every purchase changes the visual tier of its own upgrade", () => {
   const game = createEconomy({ now: () => 0 });
-  strikeTimes(game, 5000);
-  for (const id of ["hammer", "anvil"]) {
+  strikeTimes(game, 12000);
+  for (const id of ["hammer", "anvil", "apprentice", "forge"]) {
     assert.equal(game.snapshot().equipmentTiers[id], 0);
-    for (const expectedTier of [0, 1, 1, 2, 2]) {
+    for (const expectedTier of [1, 2, 3, 4, 5]) {
       assert.equal(game.purchase(id).ok, true);
       assert.equal(game.snapshot().equipmentTiers[id], expectedTier);
     }

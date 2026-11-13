@@ -8,16 +8,21 @@
     hammer: Object.freeze({ name: "Молоток", basePrice: 30, clickBonus: 1, passiveBonus: 0 }),
     anvil: Object.freeze({ name: "Наковальня", basePrice: 80, clickBonus: 2, passiveBonus: 0 }),
     apprentice: Object.freeze({ name: "Подмастерье", basePrice: 60, clickBonus: 0, passiveBonus: 1 }),
-    forge: Object.freeze({ name: "Горн", basePrice: 200, clickBonus: 0, passiveBonus: 5 }),
+    // Keep the saved key and prices compatible with earlier workshop saves.
+    forge: Object.freeze({ name: "Кузня", basePrice: 200, clickBonus: 0, passiveBonus: 5 }),
   });
   const MATERIALS = Object.freeze([
-    Object.freeze({ id: "iron", name: "Железо", bladeName: "Катана из железа", threshold: 0 }),
-    Object.freeze({ id: "steel", name: "Сталь", bladeName: "Катана из стали", threshold: 500 }),
-    Object.freeze({ id: "patterned", name: "Узорчатая сталь", bladeName: "Катана из узорчатой стали", threshold: 5000 }),
+    Object.freeze({ id: "mild", name: "Мягкая сталь", bladeName: "Первая заготовка", threshold: 0 }),
+    Object.freeze({ id: "carbon", name: "Углеродистая сталь", bladeName: "Углеродистая заготовка", threshold: 500 }),
+    Object.freeze({ id: "hardened", name: "Закалённая сталь", bladeName: "Закалённая заготовка", threshold: 1500 }),
+    Object.freeze({ id: "patterned", name: "Узорчатая сталь", bladeName: "Узорчатая заготовка", threshold: 5000 }),
+    Object.freeze({ id: "tamahagane", name: "Тамахаганэ", bladeName: "Заготовка мастера", threshold: 10000 }),
   ]);
   const EQUIPMENT_NAMES = Object.freeze({
-    hammer: Object.freeze(["Простой молоток", "Усиленный молоток", "Молоток мастера"]),
-    anvil: Object.freeze(["Простая наковальня", "Усиленная наковальня", "Наковальня мастера"]),
+    hammer: Object.freeze(["Старый молоток", "Рабочий молоток", "Стальной молоток", "Воронёный молоток", "Серебристый молоток", "Молоток мастера"]),
+    anvil: Object.freeze(["Старая наковальня", "Укреплённая наковальня", "Стальная наковальня", "Воронёная наковальня", "Каменная опора", "Наковальня мастера"]),
+    apprentice: Object.freeze(["Место подмастерья", "Новичок", "Помощник", "Ремесленник", "Опытный кузнец", "Правая рука мастера"]),
+    forge: Object.freeze(["Старая кузня", "Обновлённая кузня", "Каменная кузня", "Кузня ремесленника", "Кузня мастера", "Легендарная кузня"]),
   });
   const ACHIEVEMENTS = Object.freeze([
     Object.freeze({ id: "first-strike", name: "Первый удар" }),
@@ -120,7 +125,7 @@
         passiveIncome: passiveIncome(),
         achievements,
         materialIndex,
-        equipmentTiers: { hammer: Math.floor(levels.hammer / 2), anvil: Math.floor(levels.anvil / 2) },
+        equipmentTiers: { ...levels },
         nextPrices: Object.fromEntries(Object.entries(UPGRADES).map(([id, upgrade]) => [
           id, levels[id] === MAX_LEVEL ? null : upgrade.basePrice * 2 ** levels[id],
         ])),

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="dark">
-    <meta name="theme-color" content="#181917">
+    <meta name="theme-color" content="#19130f">
     <meta name="description" content="Кузница мастера — браузерный кликер о ковке катаны. Развивайте своё мастерство, улучшайте инструменты и открывайте новые материалы.">
     <title>Кузница мастера — мастерская</title>
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
@@ -112,167 +112,64 @@
 
           <section class="scene-panel" aria-labelledby="scene-heading">
             <div class="scene-caption">
-              <div><p class="eyebrow">СЕЙЧАС НА НАКОВАЛЬНЕ</p><h2 id="scene-heading">Катана из железа</h2></div>
-              <span class="material-badge"><span class="material-dot" aria-hidden="true"></span><span data-stat="material-name">Железо</span></span>
+              <div><p class="eyebrow">КАТАНА · ЗАГОТОВКА НА НАКОВАЛЬНЕ</p><h2 id="scene-heading">Первая заготовка</h2></div>
+              <span class="material-badge"><span class="material-dot" aria-hidden="true"></span><span data-stat="material-name">Мягкая сталь</span></span>
             </div>
 
             <div class="scene-art">
               <svg class="workshop-illustration" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 570" role="img" aria-labelledby="scene-art-title scene-art-description">
-                <title id="scene-art-title">Кузница с катаной на наковальне</title>
-                <desc id="scene-art-description">В каменной мастерской горит горн. На деревянной колоде стоит наковальня с раскалённой заготовкой катаны. Над ней поднят молоток; рядом лежат инструменты и дрова.</desc>
+                <title id="scene-art-title">Заготовка катаны в кузнице</title>
+                <desc id="scene-art-description">Тёплая деревянная кузня с каменным очагом. Изогнутая заготовка катаны лежит на наковальне.</desc>
                 <defs>
-                  <linearGradient id="wall" x2="0" y2="1"><stop stop-color="#292923"/><stop offset="1" stop-color="#1b1d1a"/></linearGradient>
-                  <linearGradient id="floor" x2="0" y2="1"><stop stop-color="#25231e"/><stop offset="1" stop-color="#141816"/></linearGradient>
-                  <radialGradient id="firelight"><stop stop-color="#ff9d42" stop-opacity=".22"/><stop offset="1" stop-color="#b54b16" stop-opacity="0"/></radialGradient>
-                  <radialGradient id="hearthlight"><stop stop-color="#ffe8a2"/><stop offset=".4" stop-color="#ef8c3d"/><stop offset="1" stop-color="#7d301a"/></radialGradient>
-                  <linearGradient id="stone" x2="1" y2="1"><stop stop-color="#535048"/><stop offset="1" stop-color="#33352f"/></linearGradient>
-                  <linearGradient id="wood" x2="1" y2="0"><stop stop-color="#4c3023"/><stop offset=".45" stop-color="#70503a"/><stop offset="1" stop-color="#332b23"/></linearGradient>
-                  <linearGradient id="metal-top" x2=".7" y2="1"><stop stop-color="#8a8980"/><stop offset=".45" stop-color="#b1a596"/><stop offset="1" stop-color="#575c55"/></linearGradient>
-                  <linearGradient id="metal-front" x2=".2" y2="1"><stop stop-color="#5b615b"/><stop offset=".45" stop-color="#3b4440"/><stop offset="1" stop-color="#292f2d"/></linearGradient>
-                  <linearGradient id="hot-blade"><stop stop-color="#665c49"/><stop offset=".28" stop-color="#a7673c"/><stop offset=".55" stop-color="#ffb35b"/><stop offset=".8" stop-color="#ffdc92"/><stop offset="1" stop-color="#ed813d"/></linearGradient>
-                  <linearGradient id="steel-blade"><stop stop-color="#91a8af"/><stop offset=".5" stop-color="#d5e5e5"/><stop offset=".72" stop-color="#efbd80"/><stop offset="1" stop-color="#ffb45e"/></linearGradient>
-                  <linearGradient id="patterned-blade"><stop stop-color="#5c7a81"/><stop offset=".5" stop-color="#aec5c5"/><stop offset=".78" stop-color="#deba83"/><stop offset="1" stop-color="#ffbd69"/></linearGradient>
-                  <pattern id="blade-waves" width="30" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-5)"><path d="M-5 2q7-5 15 0t15 0t15 0M-5 7q7-5 15 0t15 0t15 0" fill="none" stroke="#e4f3e8" stroke-width="1.3" opacity=".75"/></pattern>
-                  <linearGradient id="hammer-metal" x2=".8" y2="1"><stop stop-color="#a1a094"/><stop offset=".5" stop-color="#6d756f"/><stop offset="1" stop-color="#373f3a"/></linearGradient>
-                  <linearGradient id="edge-shade"><stop stop-color="#161a17" stop-opacity=".65"/><stop offset=".2" stop-color="#161a17" stop-opacity="0"/><stop offset=".8" stop-color="#161a17" stop-opacity="0"/><stop offset="1" stop-color="#161a17" stop-opacity=".65"/></linearGradient>
-                  <pattern id="brickwork" width="160" height="84" patternUnits="userSpaceOnUse"><path d="M0 0h160M0 42h160M80 0v42M0 42v42M160 42v42" fill="none" stroke="#8b8068" stroke-opacity=".09" stroke-width="2"/></pattern>
-                  <filter id="soft-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="12"/></filter>
-                  <filter id="blade-glow" x="-30%" y="-150%" width="160%" height="400%"><feGaussianBlur stdDeviation="5"/></filter>
+                  <linearGradient id="mild-blade" x2="0" y2="1"><stop stop-color="#a1947d"/><stop offset=".45" stop-color="#514e49"/><stop offset="1" stop-color="#b1a68d"/></linearGradient>
+                  <linearGradient id="carbon-blade" x2="0" y2="1"><stop stop-color="#e0d9cb"/><stop offset=".45" stop-color="#7a878c"/><stop offset="1" stop-color="#b2bfc0"/></linearGradient>
+                  <linearGradient id="hardened-blade" x2="0" y2="1"><stop stop-color="#c8e3ee"/><stop offset=".45" stop-color="#425f78"/><stop offset="1" stop-color="#90bbd0"/></linearGradient>
+                  <linearGradient id="patterned-blade" x2="0" y2="1"><stop stop-color="#d9d0bd"/><stop offset=".45" stop-color="#59534b"/><stop offset="1" stop-color="#d3c9ae"/></linearGradient>
+                  <linearGradient id="tamahagane-blade" x2="0" y2="1"><stop stop-color="#faf0d8"/><stop offset=".45" stop-color="#83949e"/><stop offset="1" stop-color="#f1e4c2"/></linearGradient>
+                  <radialGradient id="heated-steel"><stop stop-color="#ffe8a6"/><stop offset=".35" stop-color="#ff9b3d" stop-opacity=".9"/><stop offset="1" stop-color="#de4e12" stop-opacity="0"/></radialGradient>
+                  <radialGradient id="firelight"><stop stop-color="#ffb04b" stop-opacity=".7"/><stop offset="1" stop-color="#f89234" stop-opacity="0"/></radialGradient>
+                  <linearGradient id="scene-shade" x2="0" y2="1"><stop offset=".6" stop-color="#110b06" stop-opacity="0"/><stop offset="1" stop-color="#110b06" stop-opacity=".7"/></linearGradient>
+                  <filter id="blade-glow" x="-80%" y="-150%" width="260%" height="400%"><feGaussianBlur stdDeviation="5"/></filter>
+                  <clipPath id="blade-clip"><path d="M310 318Q500 332 667 293L650 311Q500 346 310 333Z"/></clipPath>
                 </defs>
-
-                <path fill="url(#wall)" d="M0 0h900v425H0z"/>
-                <path fill="url(#brickwork)" d="M0 0h900v425H0z"/>
-                <path fill="#171b18" d="M0 0h38v425H0zM866 0h34v425h-34z"/>
-                <path fill="#3c3b31" d="M40 0h7v425h-7zM859 0h7v425h-7z" opacity=".5"/>
-                <path fill="url(#floor)" d="M0 416q450-28 900 0v154H0z"/>
-                <path d="M0 456q450-20 900 0M0 515q450-20 900 0M200 420l-90 150m240-157-25 157m225-157 40 157m165-150 100 150" stroke="#95826a" stroke-opacity=".07" fill="none"/>
-
-                <!-- The hearth and wall tools stay in the same workshop at every level. -->
-                <g id="hearth" data-equipment="forge">
-                  <path d="M103 0h221l-17 126H120z" fill="#34362f"/>
-                  <path d="M112 0h204l-13 107H125z" fill="url(#brickwork)"/>
-                  <path d="M91 161q0-75 123-75t123 75v226H91z" fill="#222722" stroke="#47483d" stroke-width="3"/>
-                  <path d="M114 172q0-63 100-63t100 63v178H114z" fill="url(#stone)"/>
-                  <path d="M140 193q0-57 74-57t74 57v131H140z" fill="#161a17"/>
-                  <path d="M147 258q55-22 134 0v65H147z" fill="url(#hearthlight)" opacity=".9"/>
-                  <ellipse class="hearth-glow" cx="214" cy="281" rx="78" ry="81" fill="#f18932" opacity=".16" filter="url(#soft-glow)"/>
-                  <g class="hearth-flame">
-                    <path d="M170 312q-27-33 7-69-2 27 19 29-8-47 24-83-4 42 20 67 16-17 12-36 43 59 13 92z" fill="#e57d35"/>
-                    <path d="M185 314q-13-25 11-49-2 18 16 19-4-29 10-45 0 37 20 49 13-9 12-19 15 28-3 45z" fill="#ffbe63"/>
-                    <path d="M207 315q-12-14 10-36 1 17 10 19 7-10 8-16 18 22 0 33z" fill="#ffe9ae"/>
+                <image id="workshop-background" href="./assets/art/workshop-0.png" width="900" height="570" preserveAspectRatio="xMidYMid slice"/>
+                <ellipse class="hearth-glow" cx="725" cy="255" rx="150" ry="145" fill="url(#firelight)"/>
+                <g id="apprentice-presence" hidden>
+                  <ellipse cx="200" cy="496" rx="62" ry="14" fill="#100b08" opacity=".5"/>
+                  <svg id="apprentice" x="104" y="175" width="175" height="328" viewBox="0 0 409.6 768" overflow="hidden" data-visual-level="0"><image href="./assets/art/apprentice.png" width="2048" height="768"/></svg>
+                </g>
+                <ellipse cx="478" cy="540" rx="153" ry="24" fill="#100a06" opacity=".65"/>
+                <svg id="anvil" x="320" y="313" width="300" height="240" viewBox="48 408 244 300" preserveAspectRatio="none" overflow="hidden" data-visual-level="0"><image href="./assets/art/equipment.png" width="2172" height="724"/></svg>
+                <g id="katana" data-material="mild">
+                  <path d="M245 326 310 318 311 333 249 339Z" fill="#514339" stroke="#af8f66" stroke-width="1.2"/>
+                  <ellipse cx="268" cy="331" rx="3" ry="2.4" fill="#241a12" stroke="#8c7860"/>
+                  <path class="katana-body" d="M310 318Q500 332 667 293L650 311Q500 346 310 333Z" fill="url(#mild-blade)" stroke="#3b3026" stroke-width="1.4"/>
+                  <g clip-path="url(#blade-clip)">
+                    <path class="katana-pattern" d="M306 323q18-7 36 0t36 0 36 0 36-1 36-2 36-4 36-4 36-7 36-10M306 328q18-7 36 0t36 0 36 0 36-1 36-2 36-4 36-4 36-7 36-10M306 333q18-7 36 0t36 0 36 0 36-1 36-2 36-4 36-4 36-7 36-10" fill="none" stroke="#eee0bc" stroke-width="1" opacity=".8"/>
+                    <path class="katana-hamon" d="M309 331q15-5 28-1t28 0 28 0 28 0 28-1 28-2 28-2 28-4 28-4 28-6 28-6 28-8" fill="none" stroke="#fff3d9" stroke-width="2.2"/>
+                    <ellipse cx="492" cy="328" rx="65" ry="20" fill="url(#heated-steel)" opacity=".8"/>
+                    <path d="M322 324l21 2m12-2 32 3m36-1 18 1m106-9 29-4m19 1 24-6" stroke="#302a25" stroke-width=".8" opacity=".5"/>
                   </g>
-                  <path d="m145 318 141-5m-143-5 140 12" stroke="#32251e" stroke-width="9" stroke-linecap="round"/>
-                  <path d="M100 337h226v28H100z" fill="#625346"/>
-                  <path d="M97 338h233v7H97z" fill="#9b7954" opacity=".65"/>
-                  <path d="M102 366h220v40H102z" fill="#36372e"/>
-                  <path d="M114 374h198M153 366v40m107-40v40" stroke="#1f251f" stroke-width="3"/>
-                  <path d="m118 151 26 14m-34 35 30 2m-30 48h30m-30 48h30m148 0h26m-26-48h26m-26-48 26-2m-30-35 25-14M172 116l12 25m44-31-3 25m45-15-13 24" stroke="#242b24" stroke-width="4"/>
+                  <path d="M313 333Q500 346 650 311L667 293" fill="none" stroke="#f2dfb7" stroke-width="1.5"/>
+                  <ellipse cx="492" cy="328" rx="39" ry="6" fill="#ff9b32" opacity=".32" filter="url(#blade-glow)"/>
                 </g>
-                <ellipse cx="260" cy="310" rx="350" ry="270" fill="url(#firelight)"/>
-
-                <g fill="none" stroke-linecap="round">
-                  <path d="M610 115h191" stroke="#111713" stroke-width="14"/>
-                  <path d="M610 112h191" stroke="#6d5b42" stroke-width="7"/>
-                  <path d="M638 116v73m41-73v104m48-104v67m43-67v95" stroke="#a19071" stroke-width="4"/>
-                  <path d="m628 181 10 12 10-12m-14 11-9 43m17-43 10 43m21-38 6 28 10-28m-5 8v37m34-71 9 10 10-10m-10 11v43m34-31 9 13 10-13m-15 12v30m9-30v30" stroke="#73766a" stroke-width="6"/>
-                </g>
-                <g transform="translate(710 366)">
-                  <path d="M-20 12h141v13H-20zM-13 25v85H0V25m101 0v81h12V25" fill="#463e2e"/>
-                  <path d="M-21 9h145v8H-21z" fill="#817254"/>
-                  <path d="m17 7 67-19 6 12L23 19z" fill="#575d50"/>
-                  <path d="m32-3 47-12 7 6-48 14z" fill="#8c8b74"/>
-                  <path d="M92 5v-34h14V5" fill="#5b5140"/>
-                  <path d="M96-26h6" stroke="#b0915d" stroke-width="3"/>
-                </g>
-                <g transform="translate(100 443)" fill="url(#wood)" stroke="#2b2a21" stroke-width="3">
-                  <path d="m0 17 80-18 13 23-78 17zM32 40 99 21l15 23-66 18zM18 6 76-19l13 22-58 24z"/>
-                  <ellipse cx="14" cy="28" rx="13" ry="12" fill="#8a7050"/><ellipse cx="47" cy="51" rx="12" ry="12" fill="#8a7050"/><ellipse cx="30" cy="16" rx="11" ry="12" fill="#8a7050"/>
-                  <path d="m10 22 8 9m24 15 8 9m-24-44 8 9" stroke="#604730"/>
-                </g>
-
-                <!-- Equipment changes within the same workshop. -->
-                <ellipse cx="462" cy="493" rx="204" ry="36" fill="#080e0c" opacity=".48"/>
-                <g id="anvil" data-equipment="anvil" data-visual-level="0">
-                  <path d="M355 371q89-24 178 0l13 114q-101 40-204 0z" fill="url(#wood)"/>
-                  <ellipse cx="444" cy="371" rx="89" ry="25" fill="#8a6d4d"/>
-                  <ellipse cx="444" cy="372" rx="70" ry="17" fill="none" stroke="#634c36" stroke-width="3"/>
-                  <ellipse cx="444" cy="372" rx="43" ry="10" fill="none" stroke="#74573e" stroke-width="3"/>
-                  <path d="m370 393-8 90m33-87-2 98m48-98v101m37-105 4 97m29-106 10 95" stroke="#251f18" stroke-opacity=".32" stroke-width="5"/>
-                  <path d="M350 415q94 26 190 0l2 17q-99 25-194 0zM344 469q100 28 201 0l2 16q-102 30-205 0z" fill="#343934"/>
-                  <path d="M350 415q94 26 190 0M344 469q100 28 201 0" fill="none" stroke="#87816b" stroke-opacity=".6" stroke-width="2"/>
-                  <g fill="#aaa084"><circle cx="374" cy="429" r="3"/><circle cx="445" cy="438" r="3"/><circle cx="514" cy="429" r="3"/><circle cx="369" cy="482" r="3"/><circle cx="445" cy="493" r="3"/><circle cx="521" cy="482" r="3"/></g>
-                  <path d="m296 306 285-6-24 30-55 9-24 29 14 21H371l18-24-18-25-35-6z" fill="url(#metal-front)" stroke="#202924" stroke-width="2"/>
-                  <path d="m296 306-68-29 94-8 30-26h214l46 32-31 25z" fill="url(#metal-top)"/>
-                  <path d="m228 277 68 29 285-6 31-25-17 30-36 21-252 7-62-33z" fill="#515952"/>
-                  <path d="m228 277 78 18 283-8 23-12" fill="none" stroke="#d0b893" stroke-width="2"/>
-                  <path d="m352 243 214 0 46 32-286 6z" fill="#8e9287"/>
-                  <path d="m356 249 205 0 26 18-246 8z" fill="#96998d"/>
-                  <path d="m375 254 18-1 9 8-19 2z" fill="#313c34"/>
-                  <path d="m381 346 15 17-13 16h94l-9-16 19-22" stroke="#778073" stroke-opacity=".35" fill="none" stroke-width="2"/>
-                  <g class="equipment-reinforcement">
-                    <path d="m316 309 242-6-11 16-220 6z" fill="#8eaaa5" stroke="#bdc6ad" stroke-width="2"/>
-                    <path d="m393 337 91-3-22 30 10 16h-80l12-17z" fill="#405650" stroke="#a0aaa0" stroke-width="3"/>
-                    <g fill="#d4d7bc"><circle cx="340" cy="315" r="3"/><circle cx="533" cy="310" r="3"/><circle cx="403" cy="345" r="3"/><circle cx="470" cy="342" r="3"/></g>
-                  </g>
-                  <g class="equipment-masterwork">
-                    <path d="m309 299 276-8-8 9-265 8zM350 415q94 26 190 0l2 12q-99 25-194 0zM344 469q100 28 201 0l2 11q-102 30-205 0z" fill="#b98249" stroke="#e8bd7c" stroke-width="2"/>
-                    <path d="m414 345 23-7 22 7-3 23-19 9-20-9z" fill="#aa7545" stroke="#edc58d" stroke-width="2"/>
-                    <path d="m437 344 9 12-9 12-9-12zM402 352l-6 10 8 7m66-20 6 10-8 7" fill="none" stroke="#ffe0a3" stroke-width="2"/>
-                  </g>
-                </g>
-
-                <g id="katana" data-material="iron">
-                  <path d="m326 272 282-25 20 3-26 15-269 22z" fill="#ff9948" opacity=".5" filter="url(#blade-glow)"/>
-                  <path class="katana-body" d="m292 274 40-3 258-24 38 3-26 16-269 20-38 1z" fill="url(#hot-blade)" stroke="#382d23" stroke-width="2"/>
-                  <path class="katana-pattern" d="m334 272 256-24 33 3-23 12-266 21z" fill="url(#blade-waves)"/>
-                  <path d="m334 280 267-20 27-10" fill="none" stroke="#ffe4a0" stroke-width="3"/>
-                  <path d="m338 274 251-22" fill="none" stroke="#f6bf72" stroke-opacity=".5" stroke-width="2"/>
-                  <path d="m293 274 39-3 2 15-39 1z" fill="#504e42"/>
-                  <circle cx="309" cy="280" r="3" fill="#222b24"/>
-                </g>
-
-                <g id="hammer-swing">
-                <g id="hammer" data-equipment="hammer" data-visual-level="0" transform="translate(40 -55) rotate(-140 488 213)">
-                  <path d="M476 135h21l4 126q-12 9-26 0z" fill="url(#wood)" stroke="#2b2b23" stroke-width="2"/>
-                  <path d="m481 163 2 85" fill="none" stroke="#bd9563" stroke-opacity=".55" stroke-width="3"/>
-                  <path d="m475 241 26-1v20q-12 10-26 1z" fill="#312f27"/>
-                  <path d="m441 104 77-1 11 13-3 33-77 4-13-13z" fill="url(#hammer-metal)" stroke="#29332c" stroke-width="2"/>
-                  <path d="m441 104 8 11 80 1-11-13z" fill="#a3a492"/>
-                  <path d="m441 104 8 11v38l-13-13z" fill="#535d52"/>
-                  <path d="m509 116 1 34 16-1 3-33z" fill="#a3a08b"/>
-                  <path d="m454 119 41-1" stroke="#b7b69f" stroke-width="2" opacity=".5"/>
-                  <g class="equipment-reinforcement">
-                    <path d="m448 114 8 0v37l-8 1zM497 115h10v35l-10 1zM477 158h21v10h-21zM476 226h24v10h-24z" fill="#b7c7b8" stroke="#566b61" stroke-width="2"/>
-                    <path d="M480 175h16v44h-16z" fill="#39483c"/>
-                    <path d="m480 178 16 8m-16 2 16 8m-16 2 16 8m-16 2 16 8" stroke="#889d83" stroke-width="3"/>
-                  </g>
-                  <g class="equipment-masterwork">
-                    <path d="m446 114 11 0v37l-11 1zM498 115h11v35l-11 1zM476 155h23v14h-23zM475 226h26v12h-26z" fill="#bc864b" stroke="#efc88e" stroke-width="2"/>
-                    <path d="m477 118 13 13-13 14-13-14z" fill="#b77e43" stroke="#eaca96" stroke-width="2"/>
-                    <path d="m477 123 6 8-6 8-6-8z" fill="#f9dda0"/>
-                  </g>
-                </g>
-
-                </g>
+                <g id="hammer-swing"><svg id="hammer" x="505" y="95" width="170" height="170" viewBox="0 0 362 362" overflow="hidden" data-visual-level="0"><image href="./assets/art/equipment.png" width="2172" height="724"/></svg></g>
                 <g class="strike-particles" aria-hidden="true">
-                  <ellipse id="strike-glow" cx="494" cy="267" rx="36" ry="10" fill="#ffc575" filter="url(#blade-glow)"/>
-                  <path class="strike-spark" d="m491 265-4-3"/>
-                  <path class="strike-spark" d="m493 264-2-5"/>
-                  <path class="strike-spark" d="m495 264 1-5"/>
-                  <path class="strike-spark" d="m497 265 4-4"/>
-                  <path class="strike-spark" d="m497 267 5-2"/>
-                  <path class="strike-spark" d="m491 267-5-1"/>
+                  <ellipse id="strike-glow" cx="494" cy="328" rx="36" ry="10" fill="#ffc575" filter="url(#blade-glow)"/>
+                  <path class="strike-spark" d="m491 326-4-3"/><path class="strike-spark" d="m493 325-2-5"/>
+                  <path class="strike-spark" d="m495 325 1-5"/><path class="strike-spark" d="m497 326 4-4"/>
+                  <path class="strike-spark" d="m497 328 5-2"/><path class="strike-spark" d="m491 328-5-1"/>
                 </g>
-                <g class="hearth-embers" fill="#f5b964" opacity=".6"><circle cx="322" cy="181" r="2"/><circle cx="285" cy="145" r="1.5"/><circle cx="349" cy="219" r="1.5"/><circle cx="250" cy="110" r="2"/><circle cx="195" cy="162" r="1.5"/></g>
-                <path fill="url(#edge-shade)" d="M0 0h900v570H0z"/>
+                <path fill="url(#scene-shade)" d="M0 0h900v570H0z"/>
               </svg>
               <div class="strike-feedback" id="strike-feedback" aria-hidden="true"></div>
               <div class="scene-floor-label"><span class="tiny-line" aria-hidden="true"></span>РУЧНЫХ УДАРОВ: <span data-stat="strikes">0</span><span class="tiny-line" aria-hidden="true"></span></div>
               <button class="scene-hit-target" id="scene-hit-target" type="button" disabled aria-label="Ковать катану: +1 монета за удар"></button>
             </div>
 
+            <div class="scene-ledger"><span><span class="ledger-label">КУЗНЯ · <span data-level="forge">0</span> / 5</span><span data-equipment-name="forge">Старая кузня</span></span><span><span class="ledger-label">ПОДМАСТЕРЬЕ · <span data-level="apprentice">0</span> / 5</span><span data-equipment-name="apprentice">Не нанят</span></span></div>
             <div class="forge-controls">
-              <div class="tool-summary"><svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg><span><span data-equipment-name="hammer">Простой молоток</span><span class="tool-level">Уровень <span data-level="hammer">0</span> / 5</span><span class="tool-level" data-equipment-name="anvil">Простая наковальня</span></span></div>
+              <div class="tool-summary"><svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg><span><span data-equipment-name="hammer">Старый молоток</span><span class="tool-level">Уровень <span data-level="hammer">0</span> / 5</span><span class="tool-level" data-equipment-name="anvil">Старая наковальня</span></span></div>
               <button class="forge-button" id="forge-button" type="button" disabled>
                 <svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg><span>Ковать катану</span><span class="forge-reward">+1</span>
               </button>
@@ -282,45 +179,47 @@
           <p class="game-status" id="game-status" role="status" aria-live="polite" aria-atomic="true">Первое улучшение — молоток за 30 монет.</p>
 
           <section class="material-panel" aria-labelledby="material-heading">
-            <div class="section-topline"><h2 id="material-heading">Путь клинка</h2><span class="subtle-label">Материал <span data-stat="material-tier">1</span> / 3</span></div>
+            <div class="section-topline"><h2 id="material-heading">Путь клинка</h2><span class="subtle-label">Материал <span data-stat="material-tier">1</span> / 5</span></div>
             <ol class="material-path">
-              <li class="material-step is-current is-unlocked" data-material-step="iron" aria-current="step"><span class="material-swatch iron" aria-hidden="true"></span><span>Железо<small>В работе</small></span></li>
-              <li class="material-step" data-material-step="steel"><span class="material-swatch steel" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#icon-lock" /></svg></span><span>Сталь<small>500 монет всего</small></span></li>
-              <li class="material-step" data-material-step="patterned"><span class="material-swatch patterned" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#icon-lock" /></svg></span><span>Узорчатая сталь<small>5 000 монет всего</small></span></li>
+              <li class="material-step is-current is-unlocked" data-material-step="mild" aria-current="step"><span class="material-swatch mild"><svg class="icon" aria-hidden="true" style="display:none"><use href="#icon-lock"/></svg></span><span>Мягкая сталь<small>В работе</small></span></li>
+              <li class="material-step" data-material-step="carbon"><span class="material-swatch carbon"><svg class="icon" aria-hidden="true"><use href="#icon-lock"/></svg></span><span>Углеродистая<small>500 монет всего</small></span></li>
+              <li class="material-step" data-material-step="hardened"><span class="material-swatch hardened"><svg class="icon" aria-hidden="true"><use href="#icon-lock"/></svg></span><span>Закалённая<small>1 500 монет всего</small></span></li>
+              <li class="material-step" data-material-step="patterned"><span class="material-swatch patterned"><svg class="icon" aria-hidden="true"><use href="#icon-lock"/></svg></span><span>Узорчатая<small>5 000 монет всего</small></span></li>
+              <li class="material-step" data-material-step="tamahagane"><span class="material-swatch tamahagane"><svg class="icon" aria-hidden="true"><use href="#icon-lock"/></svg></span><span>Тамахаганэ<small>10 000 монет всего</small></span></li>
             </ol>
             <div class="progress-caption"><span>Всего заработано</span><span><strong data-stat="lifetime-earned">0</strong> <span data-stat-unit="lifetime-earned">монет</span></span></div>
-            <div class="progress-caption"><label id="material-progress-label" for="material-progress">До материала «Сталь»</label><span id="material-target">500 монет всего</span></div>
+            <div class="progress-caption"><label id="material-progress-label" for="material-progress">До материала «Углеродистая сталь»</label><span id="material-target">500 монет всего</span></div>
             <progress id="material-progress" value="0" max="1" aria-labelledby="material-progress-label"></progress>
             <p class="material-footnote">Материал меняется автоматически. Покупки не уменьшают общий заработок.</p>
           </section>
         </section>
 
         <aside class="shop-panel" aria-labelledby="shop-heading">
-          <div class="shop-heading"><div><p class="eyebrow">ДЕЛО МАСТЕРА</p><h2 id="shop-heading">Оборудование</h2></div><span class="shop-count">04</span></div>
-          <p class="shop-intro">Хороший инструмент меняет всё.</p>
+          <div class="shop-heading"><div><p class="eyebrow">ДЕЛО МАСТЕРА</p><h2 id="shop-heading">Мастерская</h2></div><span class="shop-count">04</span></div>
+          <p class="shop-intro">Каждое улучшение видно в вашей кузне.</p>
           <div class="upgrade-list">
             <article class="upgrade-card" data-upgrade="hammer" aria-labelledby="hammer-heading">
-              <div class="upgrade-main"><span class="upgrade-icon copper"><svg class="icon" aria-hidden="true"><use href="#icon-hammer" /></svg></span><div class="upgrade-info"><div class="upgrade-title"><h3 id="hammer-heading">Молоток</h3><span class="level-label">Ур. <span data-level="hammer">0</span> / 5</span></div><p>Точнее удар. Больше мастерства.</p></div></div>
+              <div class="upgrade-main"><span class="upgrade-icon art-icon"><svg data-preview="hammer" viewBox="0 0 362 362" aria-hidden="true"><image href="./assets/art/equipment.png" width="2172" height="724"/></svg></span><div class="upgrade-info"><div class="upgrade-title"><h3 id="hammer-heading">Молоток</h3><span class="level-label">Ур. <span data-level="hammer">0</span> / 5</span></div><p>Новая головка и рукоять на каждом уровне.</p></div></div>
               <div class="upgrade-details"><span class="upgrade-effect"><strong data-upgrade-bonus>+1</strong> <span data-upgrade-unit>за удар</span></span><span class="current-contribution">Сейчас +0 / удар</span></div>
               <div class="upgrade-bottom"><span class="level-track" role="img" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить молоток за 30 монет"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span data-price>30</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
               <p class="purchase-hint" data-purchase-hint>Ещё 30 монет до покупки</p>
             </article>
             <article class="upgrade-card" data-upgrade="anvil" aria-labelledby="anvil-heading">
-              <div class="upgrade-main"><span class="upgrade-icon sage"><svg class="icon" aria-hidden="true"><use href="#icon-anvil" /></svg></span><div class="upgrade-info"><div class="upgrade-title"><h3 id="anvil-heading">Наковальня</h3><span class="level-label">Ур. <span data-level="anvil">0</span> / 5</span></div><p>Прочная основа вашего ремесла.</p></div></div>
+              <div class="upgrade-main"><span class="upgrade-icon art-icon"><svg data-preview="anvil" viewBox="0 362 362 362" aria-hidden="true"><image href="./assets/art/equipment.png" width="2172" height="724"/></svg></span><div class="upgrade-info"><div class="upgrade-title"><h3 id="anvil-heading">Наковальня</h3><span class="level-label">Ур. <span data-level="anvil">0</span> / 5</span></div><p>От старой колоды до опоры мастера.</p></div></div>
               <div class="upgrade-details"><span class="upgrade-effect"><strong data-upgrade-bonus>+2</strong> <span data-upgrade-unit>за удар</span></span><span class="current-contribution">Сейчас +0 / удар</span></div>
               <div class="upgrade-bottom"><span class="level-track" role="img" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить наковальню за 80 монет"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span data-price>80</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
               <p class="purchase-hint" data-purchase-hint>Ещё 80 монет до покупки</p>
             </article>
             <article class="upgrade-card" data-upgrade="apprentice" aria-labelledby="apprentice-heading">
-              <div class="upgrade-main"><span class="upgrade-icon sand"><svg class="icon" aria-hidden="true"><use href="#icon-apprentice" /></svg></span><div class="upgrade-info"><div class="upgrade-title"><h3 id="apprentice-heading">Подмастерье</h3><span class="level-label">Ур. <span data-level="apprentice">0</span> / 5</span></div><p>Вторая пара умелых рук.</p></div></div>
+              <div class="upgrade-main"><span class="upgrade-icon art-icon portrait-icon"><svg data-preview="apprentice" viewBox="0 0 409.6 540" aria-hidden="true"><image href="./assets/art/apprentice.png" width="2048" height="768"/></svg></span><div class="upgrade-info"><div class="upgrade-title"><h3 id="apprentice-heading">Подмастерье</h3><span class="level-label">Ур. <span data-level="apprentice">0</span> / 5</span></div><p>Пригласите помощника и обучайте ремеслу.</p></div></div>
               <div class="upgrade-details"><span class="upgrade-effect"><strong data-upgrade-bonus>+1</strong> <span data-upgrade-unit>в секунду</span></span><span class="current-contribution">Сейчас +0 / сек</span></div>
               <div class="upgrade-bottom"><span class="level-track" role="img" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить подмастерье за 60 монет"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span data-price>60</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
               <p class="purchase-hint" data-purchase-hint>Ещё 60 монет до покупки</p>
             </article>
             <article class="upgrade-card" data-upgrade="forge" aria-labelledby="forge-heading">
-              <div class="upgrade-main"><span class="upgrade-icon ember"><svg class="icon" aria-hidden="true"><use href="#icon-flame" /></svg></span><div class="upgrade-info"><div class="upgrade-title"><h3 id="forge-heading">Горн</h3><span class="level-label">Ур. <span data-level="forge">0</span> / 5</span></div><p>Сердце, которое согревает металл.</p></div></div>
+              <div class="upgrade-main"><span class="upgrade-icon art-icon room-icon"><img data-preview="forge" src="./assets/art/workshop-0.png" alt="" width="70" height="70"></span><div class="upgrade-info"><div class="upgrade-title"><h3 id="forge-heading">Кузня</h3><span class="level-label">Ур. <span data-level="forge">0</span> / 5</span></div><p>Новая обстановка с каждым улучшением.</p></div></div>
               <div class="upgrade-details"><span class="upgrade-effect"><strong data-upgrade-bonus>+5</strong> <span data-upgrade-unit>в секунду</span></span><span class="current-contribution">Сейчас +0 / сек</span></div>
-              <div class="upgrade-bottom"><span class="level-track" role="img" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить горн за 200 монет"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span data-price>200</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
+              <div class="upgrade-bottom"><span class="level-track" role="img" aria-label="Уровень 0 из 5"><i></i><i></i><i></i><i></i><i></i></span><button class="buy-button" type="button" disabled aria-label="Улучшить кузню за 200 монет"><svg class="icon" aria-hidden="true"><use href="#icon-coin" /></svg><span data-price>200</span><svg class="icon buy-arrow" aria-hidden="true"><use href="#icon-arrow" /></svg></button></div>
               <p class="purchase-hint" data-purchase-hint>Ещё 200 монет до покупки</p>
             </article>
           </div>
@@ -336,10 +235,10 @@
       <p class="dialog-intro">Одна мастерская. Один клинок. Ваш путь к мастерству.</p>
       <ol class="how-to-list">
         <li><span class="step-number">01</span><div><h3>Куйте катану</h3><p>Каждый удар приносит монеты. Нажимайте на катану или кнопку ковки мышью, касанием или клавишами Enter и пробел, когда игровая область в фокусе.</p></div></li>
-        <li><span class="step-number">02</span><div><h3>Улучшайте инструменты</h3><p>Молоток и наковальня увеличивают доход за удар. Подмастерье и горн приносят монеты автоматически, пока игра открыта.</p></div></li>
+        <li><span class="step-number">02</span><div><h3>Улучшайте инструменты</h3><p>Молоток и наковальня увеличивают доход за удар. Подмастерье и кузня приносят монеты автоматически, пока игра открыта.</p></div></li>
         <li><span class="step-number">03</span><div><h3>Растите в мастерстве</h3><p>У каждого улучшения пять уровней. Накапливайте монеты и выбирайте между силой удара и автоматическим доходом. Общий заработок учитывает и потраченные монеты.</p></div></li>
       </ol>
-      <p class="dialog-demo-note">Инструменты меняют вид на уровнях 2 и 4. Сталь открывается за 500 монет общего заработка, узорчатая сталь — за 5 000. Материалы и достижения не дают дополнительных монет.<br><br>Прогресс автоматически сохраняется в этом браузере каждые 5 секунд и при важных событиях. После закрытия игры автодоход не начисляется.<br><br>Если в системе включено уменьшение движения, анимации отключаются.</p>
+      <p class="dialog-demo-note">Каждая покупка меняет внешний вид инструмента, подмастерья или кузни. Заготовка катаны проходит пять ступеней: мягкая сталь с начала игры, углеродистая — за 500 монет общего заработка, закалённая — за 1 500, узорчатая — за 5 000 и тамахаганэ — за 10 000. Это художественные игровые ступени. Материалы и достижения не дают дополнительных монет.<br><br>Прогресс автоматически сохраняется в этом браузере каждые 5 секунд и при важных событиях. После закрытия игры автодоход не начисляется.<br><br>Если в системе включено уменьшение движения, анимации отключаются.</p>
     </dialog>
 
     <dialog class="dialog achievements-dialog" id="achievements-dialog" aria-labelledby="achievements-title">

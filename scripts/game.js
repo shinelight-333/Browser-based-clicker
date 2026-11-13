@@ -31,6 +31,13 @@
   const achievementRows = [...document.querySelectorAll("[data-achievement]")];
   const achievementTrigger = document.querySelector('[data-open-dialog="achievements-dialog"]');
   const masterAdvice = document.getElementById("master-advice");
+  const background = document.getElementById("workshop-background");
+  const backgroundPreloads = new Map();
+  // Tight atlas rectangles keep every anvil's working face and base in place.
+  const anvilFrames = [
+    "48 408 244 300", "372 378 306 344", "714 374 346 350",
+    "1076 374 344 350", "1436 374 352 350", "1802 374 356 350",
+  ];
   const stats = Object.fromEntries(["balance", "click-income", "passive-income", "lifetime-earned", "strikes"].map(
     (name) => [name, [...document.querySelectorAll(`[data-stat="${name}"]`)]],
   ));
@@ -107,6 +114,11 @@
       card.bars.forEach((bar, index) => bar.classList.toggle("is-filled", index < level));
       card.element.classList.toggle("is-affordable", affordable);
       card.element.classList.toggle("is-maxed", maxed);
+      setAttribute(card.element, "data-visual-level", String(level));
+      const preview = card.element.querySelector("[data-preview]");
+      if (card.id === "forge") setAttribute(preview, "src", `./assets/art/workshop-${level}.png`);
+      else if (card.id === "apprentice") setAttribute(preview, "viewBox", `${Math.max(0, level - 1) * 409.6} 0 409.6 540`);
+      else setAttribute(preview, "viewBox", `${level * 362} ${card.id === "anvil" ? 362 : 0} 362 362`);
       card.button.disabled = !affordable;
       for (const icon of card.icons) icon.style.display = maxed ? "none" : "";
 
@@ -126,11 +138,32 @@
     setText(document.querySelector('[data-stat="material-name"]'), material.name);
     setText(document.querySelector('[data-stat="material-tier"]'), state.materialIndex + 1);
     setAttribute(document.getElementById("katana"), "data-material", material.id);
-    for (const id of ["hammer", "anvil"]) {
-      setAttribute(document.getElementById(id), "data-visual-level", String(state.equipmentTiers[id]));
-      setText(document.querySelector(`[data-equipment-name="${id}"]`), EQUIPMENT_NAMES[id][state.equipmentTiers[id]]);
+    for (const id of Object.keys(UPGRADES)) {
+      const level = state.equipmentTiers[id];
+      setText(document.querySelector(`[data-equipment-name="${id}"]`), id === "apprentice" && level === 0 ? "Не нанят" : EQUIPMENT_NAMES[id][level]);
+      if (id === "forge") continue;
+      const sprite = document.getElementById(id);
+      setAttribute(sprite, "data-visual-level", String(level));
+      setAttribute(sprite, "viewBox", id === "apprentice"
+        ? `${Math.max(0, level - 1) * 409.6} 0 409.6 768`
+        : id === "anvil" ? anvilFrames[level] : `${level * 362} 0 362 362`);
     }
-    setText(document.getElementById("scene-art-description"), `${material.bladeName} на наковальне. ${EQUIPMENT_NAMES.hammer[state.equipmentTiers.hammer]}; ${EQUIPMENT_NAMES.anvil[state.equipmentTiers.anvil]}. В мастерской горит горн.`);
+    document.getElementById("apprentice-presence").toggleAttribute("hidden", state.levels.apprentice === 0);
+    const swing = document.getElementById("hammer-swing");
+    const impactAngle = [-88, -82, -78, -78, -78, -78][state.levels.hammer];
+    setAttribute(swing, "data-impact-angle", String(impactAngle));
+    const restingAngle = `${impactAngle + 18}deg`;
+    if (swing.style.getPropertyValue("--hammer-rest") !== restingAngle) swing.style.setProperty("--hammer-rest", restingAngle);
+    setAttribute(background, "data-visual-level", String(state.levels.forge));
+    setAttribute(background, "href", `./assets/art/workshop-${state.levels.forge}.png`);
+    // Load only the next background in advance, without delaying any purchase.
+    const upcomingRoom = state.levels.forge + 1;
+    if (upcomingRoom <= MAX_LEVEL && !backgroundPreloads.has(upcomingRoom)) {
+      const image = new Image();
+      image.src = `./assets/art/workshop-${upcomingRoom}.png`;
+      backgroundPreloads.set(upcomingRoom, image);
+    }
+    setText(document.getElementById("scene-art-description"), `Изогнутая заготовка катаны из материала «${material.name}», без гарды и рукояти. ${EQUIPMENT_NAMES.hammer[state.levels.hammer]}; ${EQUIPMENT_NAMES.anvil[state.levels.anvil]}. ${EQUIPMENT_NAMES.forge[state.levels.forge]}. ${state.levels.apprentice ? `Рядом работает подмастерье: ${EQUIPMENT_NAMES.apprentice[state.levels.apprentice]}.` : "Подмастерье ещё не нанят."}`);
 
     for (const [index, step] of materialSteps.entries()) {
       const unlocked = index <= state.materialIndex;
@@ -147,7 +180,7 @@
       : 1;
     materialProgress.value = Math.min(1, Math.max(0, progress));
     setText(document.getElementById("material-progress-label"), next ? `До материала «${next.name}»` : "Все материалы открыты");
-    setText(document.getElementById("material-target"), next ? `${numberFormat.format(next.threshold)} монет всего` : "3 / 3");
+    setText(document.getElementById("material-target"), next ? `${numberFormat.format(next.threshold)} монет всего` : `${MATERIALS.length} / ${MATERIALS.length}`);
     setAttribute(materialProgress, "aria-valuetext", next ? `${Math.floor(progress * 100)}% до материала ${next.name}` : "Все материалы открыты");
 
     const achievementCount = `${state.achievements.length} / ${ACHIEVEMENTS.length}`;
@@ -187,7 +220,7 @@
   function display(state, announce = true) {
     const messages = [];
     if (lastRendered && announce) {
-      for (const id of ["hammer", "anvil"]) {
+      for (const id of Object.keys(UPGRADES)) {
         if (state.equipmentTiers[id] > lastRendered.equipmentTiers[id]) messages.push(EQUIPMENT_NAMES[id][state.equipmentTiers[id]]);
       }
       if (state.materialIndex > lastRendered.materialIndex) messages.push(`Новый материал: ${MATERIALS[state.materialIndex].name}`);

@@ -106,3 +106,30 @@ test("invalid new state cannot replace a valid save", () => {
   assert.equal(store.save({ ...fresh(), achievements: ["first-strike"] }).reason, "invalid-state");
   assert.equal(storage.values.get(SAVE_KEY), original);
 });
+
+
+test("a pre-redesign version 1 save keeps money, purchases and achievements", () => {
+  // Literal old-format record, independent of the new model's fixture generation.
+  const legacy = { version: 1, data: {
+    balanceMilli: 4890000, lifetimeEarnedMilli: 6000000, strikes: 500,
+    levels: { hammer: 2, anvil: 2, apprentice: 2, forge: 2 },
+    achievements: ["first-strike", "steady-rhythm", "working-forge", "first-thousand", "master-pattern"],
+  } };
+  const original = JSON.stringify(legacy);
+  const storage = memoryStorage([[SAVE_KEY, original]]);
+  const store = createSaveStore({ getStorage: () => storage });
+  const loaded = store.load();
+  assert.equal(loaded.status, "loaded");
+  const game = createEconomy({ initialState: loaded.state, now: () => 0 });
+  const state = game.snapshot();
+  assert.deepEqual(validateState(state), legacy.data);
+  assert.equal(state.materialIndex, 3);
+  assert.deepEqual(state.equipmentTiers, legacy.data.levels);
+  assert.equal(state.passiveIncome, 12);
+  assert.equal(storage.getItem(SAVE_KEY), original);
+  const upgraded = game.purchase("forge");
+  assert.equal(upgraded.ok, true);
+  assert.equal(upgraded.price, 800);
+  assert.equal(upgraded.state.levels.forge, 3);
+  assert.equal(store.save(upgraded.state).ok, true);
+});
