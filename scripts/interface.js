@@ -12,6 +12,7 @@
       if (!(dialog instanceof HTMLDialogElement) || dialog.open) return;
 
       dialogOpeners.set(dialog, trigger);
+      window.ForgeEffects?.clear();
       dialog.showModal();
       document.body.classList.add("dialog-open");
     });
@@ -33,7 +34,10 @@
       if (!document.querySelector("dialog[open]")) {
         document.body.classList.remove("dialog-open");
       }
-      dialogOpeners.get(dialog)?.focus({ preventScroll: true });
+      const opener = dialogOpeners.get(dialog);
+      const target = opener && !opener.disabled && opener.getClientRects().length
+        ? opener : document.getElementById("forge-button");
+      target?.focus({ preventScroll: true });
     });
   }
 })();

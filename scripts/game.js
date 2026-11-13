@@ -3,6 +3,7 @@
 
   const { COIN, MAX_LEVEL, UPGRADES, MATERIALS, EQUIPMENT_NAMES, ACHIEVEMENTS, createEconomy } = window.ForgeEconomy;
   const { SAVE_KEY, createSaveStore } = window.ForgeStorage;
+  const effects = window.ForgeEffects;
   const store = createSaveStore();
   const loaded = store.load();
   let game = createEconomy({ initialState: loaded.state ?? null });
@@ -29,6 +30,7 @@
   const materialProgress = document.getElementById("material-progress");
   const achievementRows = [...document.querySelectorAll("[data-achievement]")];
   const achievementTrigger = document.querySelector('[data-open-dialog="achievements-dialog"]');
+  const masterAdvice = document.getElementById("master-advice");
   const stats = Object.fromEntries(["balance", "click-income", "passive-income", "lifetime-earned", "strikes"].map(
     (name) => [name, [...document.querySelectorAll(`[data-stat="${name}"]`)]],
   ));
@@ -43,6 +45,7 @@
     bonus: element.querySelector("[data-upgrade-bonus]"),
     unit: element.querySelector("[data-upgrade-unit]"),
     contribution: element.querySelector(".current-contribution"),
+    hint: element.querySelector("[data-purchase-hint]"),
     track: element.querySelector(".level-track"),
     bars: [...element.querySelectorAll(".level-track i")],
     icons: [...element.querySelectorAll(".buy-button svg")],
@@ -108,6 +111,8 @@
       for (const icon of card.icons) icon.style.display = maxed ? "none" : "";
 
       const missing = maxed ? 0 : Math.ceil((price * COIN - state.balanceMilli) / COIN);
+      setText(card.hint, blocked ? "Игра приостановлена" : maxed ? "Все пять уровней открыты" : affordable
+        ? "Можно улучшить" : `Ещё ${numberFormat.format(missing)} ${coinWord(missing)} до покупки`);
       const label = blocked ? `${upgrade.name}: игра приостановлена, проверьте сообщение о сохранении.` : maxed
         ? `${upgrade.name}: достигнут максимальный уровень ${MAX_LEVEL}`
         : `${upgrade.name}: улучшить до уровня ${level + 1} за ${numberFormat.format(price)} монет${affordable ? "" : `. Не хватает ${numberFormat.format(missing)} монет`}`;
@@ -153,6 +158,16 @@
       row.classList.toggle("is-unlocked", unlocked);
       setText(row.querySelector(".achievement-state"), unlocked ? "Открыто" : "Закрыто");
     }
+    const fullyUpgraded = Object.values(state.levels).every((level) => level === MAX_LEVEL);
+    setText(masterAdvice, fullyUpgraded
+      ? "Мастерская полностью оснащена. Продолжайте ковку и увеличивайте свой общий заработок."
+      : state.levels.hammer === 0
+        ? "Начните с молотка: каждый удар будет приносить больше монет."
+        : state.passiveIncome === 0
+          ? "Пригласите подмастерье — он будет приносить монеты, пока мастерская открыта."
+          : next
+            ? `Следующий материал — ${next.name.toLocaleLowerCase("ru-RU")}. Продолжайте ковку: потраченные монеты тоже учитываются в общем заработке.`
+            : "Все материалы открыты. Улучшайте оставшееся оборудование до пятого уровня.");
   }
 
   function showSaveNotice(kind, label, detail) {
@@ -165,6 +180,7 @@
     window.clearTimeout(toastTimer);
     setText(toast, messages.join(" · "));
     toast.hidden = false;
+    effects?.milestone();
     toastTimer = window.setTimeout(() => { toast.hidden = true; }, 6500);
   }
 
@@ -205,6 +221,7 @@
     if (blocked) return;
     const state = game.strike();
     if (display(state)) persist(state);
+    effects?.strike(state.clickIncome);
   }
 
   for (const button of strikeButtons) {
@@ -222,6 +239,7 @@
       const milestone = display(result.state);
       if (result.ok || milestone) persist(result.state);
       if (result.ok) {
+        effects?.purchase(card.element);
         setText(status, `${UPGRADES[card.id].name}: уровень ${result.level}. Потрачено ${numberFormat.format(result.price)} монет.`);
       } else {
         setText(status, result.reason === "max-level" ? "Достигнут максимальный уровень." : "Для этого улучшения пока не хватает монет.");
@@ -244,6 +262,7 @@
     }
     window.clearTimeout(toastTimer);
     toast.hidden = true;
+    effects?.clear();
     game = createEconomy();
     blocked = false;
     lastRendered = null;
@@ -262,6 +281,7 @@
     if (event.key !== SAVE_KEY && event.key !== null) return;
     try { if (event.storageArea !== window.localStorage) return; } catch { return; }
     blocked = true;
+    effects?.clear();
     render(game.snapshot());
     window.clearTimeout(toastTimer);
     toast.hidden = true;
